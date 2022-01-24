@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyTimeObserver"
         mc:Ignorable="d"
-        Title="Clock Oberser Window" Height="200" Width="400">
+        Title="Clock Oberser Window" Height="200" Width="400"
+        Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="{Binding Path=Time}}"></Label>
+        <Label Grid.Row="0" Content="{Binding Path=Time}"></Label>
         <Button Grid.Row="1" Click="Button_Click" >Beenden</Button>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 
 namespace MyTimeObserver
@@ -33,12 +34,21 @@ namespace MyTimeObserver
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            Close();
         }
 
         public void Update()
         {
-            throw new System.NotImplementedException();
+            if (!CheckAccess())
+            {
+                Dispatcher.Invoke(Update);
+            }
+            Time = subject.Time;
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            subject.Detach(this);
         }
     }
 }
