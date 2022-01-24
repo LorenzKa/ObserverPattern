@@ -14,32 +14,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MyTimeObserver
+namespace Chatter
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ClockSubject clockSubject = new ClockSubject();
+        private ChatSubject clockSubject = new ChatSubject();
         private bool running = true;
         public MainWindow()
         {
             InitializeComponent();
             new Thread(() =>
             {
-                while (running)
-                {
-                    clockSubject.Time = TimeOnly.FromDateTime(DateTime.Now).ToString("r");
-                    Thread.Sleep(1000);
-                }
+               
             }).Start();
 
         }
 
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var window = new ClockOberserWindow(clockSubject);
+            var window = new ChatWindow(clockSubject);
             window.Show();
         }
 
