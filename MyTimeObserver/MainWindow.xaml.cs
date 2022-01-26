@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,30 +20,52 @@ namespace Chatter
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IObserver
     {
-        private ChatSubject clockSubject = new ChatSubject();
-        private bool running = true;
+        private ChatSubject clientSubject = new ChatSubject();
+        private ObservableCollection<string> messageList = new();
+        private ObservableCollection<string> loginList = new();
+        public string Clientname { get; set; }
+        public string TopicsOfInterest => throw new NotImplementedException();
         public MainWindow()
         {
             InitializeComponent();
-            new Thread(() =>
-            {
-               
-            }).Start();
-
+            Clientname = "SERVER";
+            clientSubject.Attach(this);
+            messageBox.ItemsSource = messageList;
+            loginBox.ItemsSource = loginList;
+            DataContext = this;
         }
 
+
+        public void ClientAttached(string name)
+        {
+            if (name != Clientname)
+            {
+                loginList.Add($"[{DateTime.Now}] {name}: has logged on");
+
+                numberLabel.Content = "Nr. Clients: " + (clientSubject.NrObservers - 1);
+            }
+        }
+
+        public void ClientDetached(string name)
+        {
+
+            loginList.Add($"[{DateTime.Now}] {name}: has logged off");
+            numberLabel.Content = "Nr. Clients: " + (clientSubject.NrObservers - 1);
+        }
+
+        public void Update(string name, string msg)
+        {
+            messageList.Add($"[{DateTime.Now}] {name}: {msg}");
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var window = new ChatWindow(clockSubject);
+            clientSubject.Name = textBoxName.Text;
+            var window = new ChatWindow(clientSubject);
             window.Show();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            running = false;
-        }
     }
 }

@@ -5,14 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyTimeObserver"
         mc:Ignorable="d"
-        Title="MainWindow" Height="200" Width="400"
-        Closing="Window_Closing">
+        Title="MainWindow" Height="600" Width="600">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="55*"></RowDefinition>
+            <RowDefinition Height="129*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Click="Button_Click">Create Clock</Button>
+        <ListView Name="messageBox" Margin="0,55,300,0" Grid.RowSpan="2"/>
+        <ListView Name="loginBox" Margin="300,55,0,0" Grid.RowSpan="2"/>
+
+        <TextBox Width="300px" Height="50px" Name="textBoxName" Background="Aqua" Margin="0,0,300,125"/>
+        <Button Width="100px" Height="50px" Grid.Row="0" Click="Button_Click" Margin="300,0,200,125">Create User</Button>
+        <Label Width="200px" Height="50px" Name="numberLabel" Grid.Row="0" Margin="400,0,0,125">Nr. Observers:</Label>
     </Grid>
 </Window>

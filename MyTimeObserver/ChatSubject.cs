@@ -8,19 +8,18 @@ namespace Chatter
 {
     public class ChatSubject : Subject
     {
-        
-
+        public string Name { get; set; }
         internal void NewMessage(string name, string text)
         {
             Notify(name, text);
         }
         internal void ClientAttached(string name)
         {
-            ClientAttached(name);
+            Notify(name, "has logged in");
         }
         internal void ClientDetached(string name)
         {
-            ClientDetached(name);
+            Notify(name, "has logged off");
         }
     }
 }
